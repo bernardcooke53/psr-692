@@ -3,7 +3,7 @@ name: PR
 
 on:
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 concurrency:
   group: pr-${{ github.head_ref }}
@@ -42,3 +42,4 @@ jobs:
         with:
           root_options: -vv
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          build_metadata: ${{ github.run_id }}

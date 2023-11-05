@@ -23,17 +23,24 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Set up Python 3.10
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
 
+      - name: Install mypy
+        run: |
+          pip install mypy
+          which mypy
+
       - name: Run release
         uses: zckv/python-semantic-release@switch_to_a_composite_action
         with:
           root_options: -vv
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          build_metadata: ${{ github.run_id }}
